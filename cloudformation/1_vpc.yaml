@@ -516,6 +516,10 @@ Outputs:
     Value: !Ref DnsDomain
     Export:
       Name: !Sub '${Environment}-DNS-BaseDomain'
+  DnsZonePublicId:
+    Value: !Ref DnsZonePublic
+    Export:
+      Name: !Sub '${Environment}-DNS-PublicHostedZoneId'
   DBSubnetGroupPublic:
     Description: 'Public DBSubnetGroup'
     Value: !Ref DBSubnetGroupPublic

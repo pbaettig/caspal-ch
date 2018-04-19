@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Metadata:
+  'AWS::CloudFormation::Interface':
+    ParameterGroups:
+    - Label:
+        default: 'Environment'
+      Parameters:
+      - Environment
+
+Parameters:
+  Environment:
+    Description: 'environment.'
+    Type: String
+    Default: base
+
+
+Resources:
+  SiteAlias:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName:
+        Fn::ImportValue: !Sub '${Environment}-DNS-BaseDomain'
+      Comment: DNS alias for website.
+      Name:
+        Fn::ImportValue: !Sub '${Environment}-DNS-BaseDomain'
+      Type: A
+      AliasTarget:
+        DNSName: s3-website-eu-west-1.amazonaws.com.
+        HostedZoneId:
+          Fn::ImportValue: !Sub '${Environment}-DNS-PublicHostedZoneId'
+
+  WwwSiteAlias:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        HostedZoneName:
+          Fn::ImportValue: !Sub '${Environment}-DNS-BaseDomain'
+        Comment: DNS alias for website.
+        Name: !Sub
+          - www.${ValueFromBaseStack}
+          - ValueFromBaseStack:
+              Fn::ImportValue: !Sub '${Environment}-DNS-BaseDomain'
+        Type: A
+        AliasTarget:
+          DNSName: s3-website-eu-west-1.amazonaws.com.
+          HostedZoneId:
+            Fn::ImportValue: !Sub '${Environment}-DNS-PublicHostedZoneId'
