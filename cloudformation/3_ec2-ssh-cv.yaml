@@ -1,0 +1,115 @@
+# render a simple ec2 instance
+# use this template for quick testing
+
+AWSTemplateFormatVersion: '2010-09-09'
+Metadata:
+  'AWS::CloudFormation::Interface':
+    ParameterGroups:
+    - Label:
+        default: 'Environment'
+      Parameters:
+      - Environment
+
+Parameters:
+  Environment:
+    Description: 'environment.'
+    Type: String
+    Default: base
+
+Resources:
+  Ec2SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      Tags:
+        - Key: Name
+          Value: ssh-cv-ec2
+      GroupDescription: Allow SSH from outside
+      SecurityGroupEgress:
+        -   IpProtocol: '-1'
+            FromPort: '-1'
+            ToPort: '-1'
+            CidrIp: 0.0.0.0/0
+      SecurityGroupIngress:
+        -   IpProtocol: TCP
+            FromPort: 22
+            ToPort: 22
+            CidrIp: 0.0.0.0/0
+      VpcId:
+        Fn::ImportValue: !Sub '${Environment}-VPC-ID'
+
+  Ec2InstanceProfile:
+    Type: 'AWS::IAM::InstanceProfile'
+    Properties:
+      Path: '/'
+      Roles:
+        - !ImportValue global-S3-caspal-bootstrap-Role-ReadOnly
+      
+
+  Ec2:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: ami-08025971
+      KeyName:
+        Fn::ImportValue: !Sub '${Environment}-EC2-DefaultKey'
+      InstanceType: t2.nano
+      IamInstanceProfile: !Ref Ec2InstanceProfile
+      AvailabilityZone:
+        Fn::ImportValue: !Sub '${Environment}-VPC-AZA'
+      EbsOptimized: false
+      BlockDeviceMappings:
+        - DeviceName: xvda
+          Ebs:
+            VolumeSize: 20
+            VolumeType: gp2
+            DeleteOnTermination: true
+      Tags:
+        -
+          Key: Name
+          Value: 'ssh-cv'
+        - Key: Environment
+          Value: 'base'
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: True
+          DeviceIndex: "0"
+          SubnetId:
+            Fn::ImportValue: !Sub '${Environment}-VPC-SubnetAPublic'
+          GroupSet:
+            - !Ref Ec2SecurityGroup
+      UserData:
+        Fn::Base64:
+          !Sub |
+            #cloud-config
+            hostname: pascal-00.base
+            locale: en_US.utf8
+            manage_etc_hosts: true
+            package_update: true
+            package_upgrade: true
+            packages:
+              - curl
+              - unzip
+            runcmd:
+              - curl 'https://s3.amazonaws.com/aws-cli/awscli-bundle.zip' -o '/tmp/awscli-bundle.zip'
+              - cd /tmp ; unzip awscli-bundle.zip ; cd awscli-bundle ; ./install -i /opt/aws -b /usr/local/bin/aws
+              - aws s3 sync s3://caspal-bootstrap/cv/ /tmp/cv
+              - cd /tmp/cv; bash setup.sh
+
+              
+
+  Ec2DnsHostname:
+    Type: AWS::Route53::RecordSet
+    DependsOn:  Ec2
+    Properties:
+      HostedZoneName:
+        Fn::ImportValue: !Sub '${Environment}-DNS-BaseDomain'
+      Comment: DNS name for ec2 instance.
+      Name: !Sub
+        - cv.${ValueFromBaseStack}
+        - ValueFromBaseStack:
+            Fn::ImportValue: !Sub '${Environment}-DNS-BaseDomain'
+      Type: A
+      TTL: 300
+      ResourceRecords:
+        - !GetAtt Ec2.PublicIp
+
+  
+
