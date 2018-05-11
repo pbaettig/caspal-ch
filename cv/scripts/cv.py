@@ -32,7 +32,6 @@ Skills
   * Saltstack
   * Debian
   * Bash
-  * ...
 """
 cv_english['Work Experience']['Jun. 2015 - Jul. 2016'] = 'IT System & Support Engineer at LzLabs GmbH'
 cv_english['Work Experience'][' '] = """Details
@@ -53,7 +52,6 @@ Skills
   * Bash
   * Veeam Backup & Recovery
   * VMware vSphere
-  * ...
 """
 cv_english['Work Experience']['Feb. 2011 - May 2015'] = 'ICT System Specialist at Rieter Machine Works'
 cv_english['Work Experience']['  '] = """Details
