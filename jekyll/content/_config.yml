@@ -40,7 +40,7 @@ paginate_path: blog/page:num # jekyll-paginate > blog page
 #jekyll-mentions: https://twitter.com # jekyll-mentions > service used when @replying
 #twitter:
 #  username: DavidDarnes # jekyll-seo-tag > Owners twitter username
-author: PascalBättigA # jekyll-seo-tag > default author
+author: Pascal Bättig # jekyll-seo-tag > default author
 social: # jekyll-seo-tag > social overrides
   name: Pascal Bättig # jekyll-seo-tag > real name
   links:  # jekyll-seo-tag > social aliases (sameAs)
@@ -67,6 +67,8 @@ collections:
     feature_text: |
       Welcome to the blog
     feature_image: "/assets/header.png"
+  projects:
+    output: true
 
 # 6. Jekyll collections settings
 defaults:
@@ -91,12 +93,17 @@ defaults:
 # 7. Site settings
 encoding: UTF-8 # Make sure the encoding is right
 lang: en-GB # Set the site language
+default_language: en
+languages:
+  - en
+  - de
+  - ch
 title: "Pascal Bättig" # Site name or title, also used in jekyll-seo-tag
 logo: "/assets/logos/logo.svg" # Site logo, also used in jekyll-seo-tag
 description: |
-  Pascal Bättig, DevOps | SRE | Cloud
-  <br>
-  Get in touch!
+  Pascal Bättig<br>
+  Get in touch and let's discuss if there's something I can help you with!
+  
 # Site description and default description, also used in jekyll-seo-tag
 url: "https://caspal.ch" # Site url, also used in jekyll-seo-tag
 baseurl: ""
@@ -122,9 +129,9 @@ navigation_header:
 - title: Home
   url: /
 - title: CV
-  url: /cv
+  url: /cv/
 - title: Contact
-  url: /contact
+  url: /contact/
 
   
 

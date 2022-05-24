@@ -1,0 +1,8 @@
+{% assign projects=site.pages | where_exp:"p","p.dir contains '/projects/'" | where_exp:"p","p.name != 'index.md'" %}
+{% assign lang_projects=projects | where:"lang",page.lang %}
+
+<ul>
+{% for p in lang_projects %}
+    <li><a href="{{ p.url }}"> {{ p.title }}</a></li>
+{% endfor %}
+</ul>

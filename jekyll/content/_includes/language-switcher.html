@@ -1,0 +1,17 @@
+{% assign posts=site.posts | where:"lang-ref", page.lang-ref | sort: 'lang' %}
+{% if posts.size == 0 %}
+    {% assign posts=site.pages | where:"lang-ref", page.lang-ref | sort: 'lang' %}
+{% endif %}
+{% if posts.size > 1 %}
+<footer class="lang-options">
+    <div class="lang-container">   
+        <div class="lang"></div>
+        <small class="tech">Read this page in a different language:</small>
+        {% for post in posts %}
+            {% if post.lang != page.lang %}
+                <a href="{{ site.base-url }}{{ post.url }}" class="{{ post.lang }}" title="View in {{post.lang}}">{{ post.lang }}</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</footer>
+{% endif %}

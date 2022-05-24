@@ -27,22 +27,6 @@ resource "aws_s3_bucket_policy" "bp" {
 }
 
 data "aws_iam_policy_document" "cf" {
-
-  # {
-  #     "Version": "2008-10-17",
-  #     "Id": "PolicyForCloudFrontPrivateContent",
-  #     "Statement": [
-  #         {
-  #             "Sid": "1",
-  #             "Effect": "Allow",
-  #             "Principal": {
-  #                 "AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E3EF4ONC4GKSVM"
-  #             },
-  #             "Action": "s3:GetObject",
-  #             "Resource": "arn:aws:s3:::caspal.ch-prod/*"
-  #         }
-  #     ]
-  # }
   statement {
     principals {
       type        = "AWS"
@@ -50,10 +34,12 @@ data "aws_iam_policy_document" "cf" {
     }
 
     actions = [
-      "s3:GetObject"
+      "s3:GetObject",
+      "s3:ListBucket",
     ]
 
     resources = [
+      "${aws_s3_bucket.bp.arn}",
       "${aws_s3_bucket.bp.arn}/*",
     ]
   }
@@ -75,6 +61,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
     domain_name = aws_s3_bucket.bp.bucket_regional_domain_name
     origin_id   = local.s3_origin_id
+    origin_path = "/caspal" # use "/placeholder" to display placeholder page
 
 
     s3_origin_config {
@@ -87,16 +74,16 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   comment             = ""
   default_root_object = "index.html"
   aliases             = ["caspal.ch", "www.caspal.ch"]
-  #   logging_config {
-  #     include_cookies = false
-  #     bucket          = "mylogs.s3.amazonaws.com"
-  #     prefix          = "myprefix"
-  #   }
 
-  #   aliases = ["mysite.example.com", "yoursite.example.com"]
+  custom_error_response {
+    error_caching_min_ttl = 10
+    error_code            = 404
+    response_code         = 404
+    response_page_path    = "/404.html"
+  }
 
   default_cache_behavior {
-    allowed_methods        = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    allowed_methods        = ["GET", "HEAD"] #["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods         = ["GET", "HEAD"]
     target_origin_id       = local.s3_origin_id
     viewer_protocol_policy = "allow-all"
@@ -109,60 +96,22 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
       cookies {
         forward = "none"
       }
+      headers = [
+        # this will hurt cache-hit ratios, but is necessary
+        # for the automatic language detection to work
+        "Accept-Language",
+      ]
     }
 
     lambda_function_association {
-      event_type = "viewer-request"
+      # event_type = "viewer-request"
+      event_type = "origin-request"
       lambda_arn = aws_lambda_function.f.qualified_arn
     }
 
 
   }
 
-  # Cache behavior with precedence 0
-  #   ordered_cache_behavior {
-  #     path_pattern     = "/content/immutable/*"
-  #     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-  #     cached_methods   = ["GET", "HEAD", "OPTIONS"]
-  #     target_origin_id = local.s3_origin_id
-
-  #     forwarded_values {
-  #       query_string = false
-  #       headers      = ["Origin"]
-
-  #       cookies {
-  #         forward = "none"
-  #       }
-  #     }
-
-  #     min_ttl                = 0
-  #     default_ttl            = 86400
-  #     max_ttl                = 31536000
-  #     compress               = true
-  #     viewer_protocol_policy = "redirect-to-https"
-  #   }
-
-  # Cache behavior with precedence 1
-  #   ordered_cache_behavior {
-  #     path_pattern     = "/content/*"
-  #     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-  #     cached_methods   = ["GET", "HEAD"]
-  #     target_origin_id = local.s3_origin_id
-
-  #     forwarded_values {
-  #       query_string = false
-
-  #       cookies {
-  #         forward = "none"
-  #       }
-  #     }
-
-  #     min_ttl                = 0
-  #     default_ttl            = 3600
-  #     max_ttl                = 86400
-  #     compress               = true
-  #     viewer_protocol_policy = "redirect-to-https"
-  #   }
 
   price_class = "PriceClass_200"
 
@@ -178,10 +127,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   viewer_certificate {
-    # cloudfront_default_certificate = true
     acm_certificate_arn = data.aws_acm_certificate.c.arn
     ssl_support_method  = "sni-only"
   }
-
-
 }

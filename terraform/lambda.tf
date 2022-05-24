@@ -19,7 +19,6 @@ resource "aws_iam_role_policy_attachment" "basic" {
 }
 
 
-
 data "external" "buildf" {
   program = [
     "/bin/bash",
@@ -35,16 +34,15 @@ data "external" "buildf" {
 
 
 resource "aws_lambda_function" "f" {
-  provider      = aws.us
-  filename      = "${path.module}/lambda/main.py.zip"
-  function_name = "caspal-ch-uri-rewrite"
-  role          = aws_iam_role.r.arn
-  handler       = "main.lambda_handler"
-#   publish       = true
-  # The filebase64sha256() function is available in Terraform 0.11.12 and later
-  # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
-  # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
-  source_code_hash = base64encode(data.external.buildf.result.sha256)
-
-  runtime = "python3.8"
+  provider = aws.us
+  lifecycle {
+    ignore_changes = [filename]
+  }
+  filename         = data.external.buildf.result.path
+  function_name    = "caspal-ch-uri-rewrite"
+  role             = aws_iam_role.r.arn
+  handler          = "main.lambda_handler"
+  source_code_hash = filebase64sha256(data.external.buildf.result.path)
+  publish          = true
+  runtime          = "python3.8"
 }

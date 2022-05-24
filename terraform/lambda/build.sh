@@ -3,13 +3,9 @@ set -e
 
 cd $SCRIPT_DIR
 
-zip -0 -o main.py.zip main.py >/dev/null 2>&1
+fname='main.py.zip'
+full_path="$(pwd)/$fname"
 
-os="$(uname -s)"
-case "${os}" in
-    Linux*)     chksum=`sha256sum main.py`;;
-    Darwin*)    chksum=`shasum -a 256 main.py`;;
-esac
+zip -0 -o "$fname" main.py >/dev/null 2>&1
 
-
-echo "{\"sha256\": \"$(echo $chksum | cut -d' ' -f1)\"}"
+echo "{\"path\": \"$full_path\"}"

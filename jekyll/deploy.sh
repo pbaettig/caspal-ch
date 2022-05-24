@@ -6,5 +6,6 @@ cd $SCRIPT_DIR
 
 ./jekyll.sh build
 
-aws s3 sync $SCRIPT_DIR/content/_site s3://caspal.ch-prod/
+aws s3 sync $SCRIPT_DIR/../placeholder/ s3://caspal.ch-prod/placeholder/
+aws s3 sync $SCRIPT_DIR/content/_site s3://caspal.ch-prod/caspal/
 

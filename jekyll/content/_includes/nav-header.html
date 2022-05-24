@@ -1,6 +1,7 @@
 {% if site.navigation_header %}
 <nav class="nav  nav--header">
   <ul class="list  list--nav">
+    
     {% for item in site.navigation_header %}
 
       {% if item.url contains '://' %}
@@ -8,7 +9,7 @@
       {% else %}
         {% assign url = item.url | relative_url %}
       {% endif %}
-
+     
       <li class="item  item--nav{% if item.url == page.url %}  item--current{% endif %}">
         <a href="{{ url }}">{{ item.title }}</a>
       </li>

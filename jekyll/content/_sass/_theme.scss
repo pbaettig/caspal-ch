@@ -201,12 +201,14 @@ body {
   }
   &--current {
     a {
-      color: $captionColour;
+      color: $currentColour;//$captionColour;
     }
   }
 }
 
-
+.tech {
+  font-size: small;
+}
 // Links, icons and images
 a .icon {
   transition: fill .1s;
@@ -457,4 +459,12 @@ pre code {
     white-space: pre;
     overflow-x: scroll;
   }
+}
+
+.lang-container {
+  display: flex;
+}
+
+.lang {
+  margin-right: auto;
 }
