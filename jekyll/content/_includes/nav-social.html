@@ -1,9 +1,9 @@
 <nav class="nav  nav--social">
   {% for link in site.social_links %}
-    {% if link[1] != blank %}
-      {% assign id = link[0] | downcase %}
-      <a href="{{ link[1] }}">
-        {% include icon.html id=id title=id %}
+    {% assign link_lang = link.lang | default: page.lang %}
+    {% if link.href != blank and link_lang == page.lang %}
+      <a href="{{ link.href }}">
+        {% include icon.html id=link.icon title=link.title %}
       </a>
     {% endif %}
   {% endfor %}

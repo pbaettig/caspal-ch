@@ -7,8 +7,11 @@
 
   {% elsif page.layout == "page" or page.layout == "home" or page.layout == "blog" %}
     <section class="section  section--description">
-      <h3>About</h3>
-      <p>{{ site.description }}</p>
+      {% if page.lang == 'de' %}
+      {{ site.description.de | markdownify }}
+      {% else %}
+      {{ site.description.en | markdownify }}
+      {% endif %}
       {% include nav-social.html %}
     </section>
 

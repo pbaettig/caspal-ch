@@ -97,13 +97,25 @@ default_language: en
 languages:
   - en
   - de
-  - ch
+language_switcher_prompt:
+  en: |
+    This page is also available in other languages:
+  de: |
+    Diese Seite gibt es auch in anderen Sprachen:
+
+
 title: "Pascal Bättig" # Site name or title, also used in jekyll-seo-tag
 logo: "/assets/logos/logo.svg" # Site logo, also used in jekyll-seo-tag
-description: |
-  Pascal Bättig<br>
-  Get in touch and let's discuss if there's something I can help you with!
-  
+description: 
+  en: |
+    #### Hire me!
+    <em><b>Pascal Bättig, DevOps | Cloud | SRE</b></em><br>
+    Feel free to get in touch if there's a project I can help out on!
+  de: |
+    #### Offen für neue Projekte!
+    <em><b>Pascal Bättig, DevOps | Cloud | SRE</b></em><br>
+    Nehmen Sie gerne Kontakt auf, wenn Sie ein Projekt haben bei dem ich Sie unterstützen kann!
+
 # Site description and default description, also used in jekyll-seo-tag
 url: "https://caspal.ch" # Site url, also used in jekyll-seo-tag
 baseurl: ""
@@ -127,12 +139,7 @@ favicons: # Favicons are also used in the manifest file. Syntax is 'size: path'
 # 9. Site navigation
 navigation_header:
 - title: Home
-  url: /
-- title: CV
-  url: /cv/
-- title: Contact
-  url: /contact/
-
+  url: /en/
   
 
 
@@ -140,10 +147,24 @@ navigation_footer: {}
 
 
 social_links: # Appears in sidebar. Set the urls then uncomment and comment out as desired
-  Email: mailto:pbaettig@gmail.com
-  LinkedIn: https://www.linkedin.com/in/pascal-b%C3%A4ttig/
-  GitHub: https://github.com/pbaettig
-  link: https://caspal.ch
+  - title: Email
+    icon: email
+    href: mailto:pbaettig@gmail.com
+  - title: LinkedIn
+    icon: linkedin
+    href: https://www.linkedin.com/in/pascal-b%C3%A4ttig/
+  - title: GitHub
+    icon: github
+    href: https://github.com/pbaettig
+  - title: CV
+    icon: pdf
+    href: /assets/CV-en.pdf
+    lang: en
+  - title: Lebenslauf (englisch)
+    icon: pdf
+    href: /assets/CV-en.pdf
+    lang: de
+  
   # RSS: /feed.xml
 
 sharing_links: # Appear at the bottom of single blog posts, add as desired. The value can be 'true' or the desired button colour

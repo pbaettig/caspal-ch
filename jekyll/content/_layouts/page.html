@@ -12,9 +12,10 @@ layout: default
 
     {{ content }}
 
+    {% include language-switcher.html %}
   </article>
 
   {% if page.aside == true %}{% include site-aside.html %}{% endif %}
 </main>
-{% include language-switcher.html %}
+
 {% include site-footer.html %}
