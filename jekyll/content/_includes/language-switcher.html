@@ -1,17 +1,14 @@
-{% assign posts=site.posts | where:"lang-ref", page.lang-ref | sort: 'lang' %}
-{% if posts.size == 0 %}
-    {% assign posts=site.pages | where:"lang-ref", page.lang-ref | sort: 'lang' %}
-{% endif %}
-
+{% assign pages=site.pages | where:"lang-ref", page.lang-ref | sort: 'lang' %}
+{{ pages | inspect }}
 {% if page.lang == 'de' %}
 {%     assign prompt = site.language_switcher_prompt.de %}
 {% else %}
 {%     assign prompt = site.language_switcher_prompt.en %}
 {% endif %}
-{% if posts.size > 1 %}
+{% if pages.size > 1 %}
 <hr>
     <small class="tech">{{ prompt }} </small>
-    {% for post in posts %}
+    {% for post in pages %}
         {% if post.lang != page.lang %}
             <a class="tech" href="{{ site.base-url }}{{ post.url }}" class="{{ post.lang }}" title="View in {{post.lang}}">{{ post.lang | upcase }}</a>
         {% endif %}
