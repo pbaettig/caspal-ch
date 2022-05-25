@@ -23,9 +23,6 @@ data "external" "buildf" {
   program = [
     "/bin/bash",
     "build.sh"
-    # "zip",
-    # "main.py.zip",
-    # "main.py"
   ]
   working_dir = "${path.module}/lambda"
   query       = {}
