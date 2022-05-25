@@ -26,7 +26,7 @@ There's nothing more important to the successful operation of any application th
 I'm swiss and feel a bit uneasy writing about all the things I can help you with, so to balance it out and be transparent here are some things I likely cannot help you with
 
 #### webdesign / frontend
-As is evident by this website. The most interesting aspect of this site has been the infra setup anyway 😅
+As is evident by this website. The most interesting aspect of this site has been the infra setup anyway 😅 (the code for it can be found on <a href="https://github.com/pbaettig/caspal-ch">GitHub</a>)
 
 #### Windows
 I'm no trying to bash the Microsoft ecosystem, I just don't know enough about it to be particularly helpful

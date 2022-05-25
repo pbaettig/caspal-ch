@@ -23,9 +23,9 @@ Für den erfolgreichen Betrieb jeder Applikation gibt es verschiedene Faktoren. 
 
 
 ### Womit ich wahrscheinlich nicht helfen kann:
-Als Schweizer kann ich natürlich nicht nur über meine Stärken schreiben sondern muss auch noch ein paar Punkte erwähnen, bei denen ich höchstwahrscheinlich nichts sunstantiell beitragen kann.
+Als Schweizer kann ich natürlich nicht nur über meine Stärken schreiben sondern muss auch noch ein paar Punkte erwähnen, bei denen ich höchstwahrscheinlich nichts substantiell beitragen kann.
 
 #### Webdesign / Frontend
-Diese Webseite stellt den Höhepunkt meiner Webdesign Fähigkeiten dar. Das Setup der Infrastruktur dafür war definitiv interessanter 😅
+Diese Webseite stellt den Höhepunkt meiner Webdesign Fähigkeiten dar. Das Setup der Infrastruktur dafür war definitiv interessanter 😅 (den Code dazu gibt es auf <a href="https://github.com/pbaettig/caspal-ch">GitHub</a>)
 #### Windows
 Ich möchte damit keinen Glaubenskrieg befeuren. Ich bin einfach nicht mehr wirklich up-to-date genug im Microsoft Ökosystem um produktiv damit arbeiten zu können.
