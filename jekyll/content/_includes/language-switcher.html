@@ -1,5 +1,5 @@
 {% assign pages=site.pages | where:"lang-ref", page.lang-ref | sort: 'lang' %}
-{{ pages | inspect }}
+
 {% if page.lang == 'de' %}
 {%     assign prompt = site.language_switcher_prompt.de %}
 {% else %}
