@@ -12,7 +12,7 @@ DevOps kann verschiedene Bedeutungen haben. Für mich geht es dabei um die wortw
 
 ### Womit ich möglicherweise helfen kann...
 #### Aufbau von Infrastruktur
-Egal ob für eine kleine Webseite (wie diese) oder eine komplexere Applikation mit mehreren (micro) services
+Egal ob für eine kleine Webseite (wie diese) oder eine komplexere Applikation mit mehreren (micro) services.
 
 
 #### Automatisation
