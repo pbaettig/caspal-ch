@@ -7,7 +7,7 @@ feature_image: "/assets/header.png"
 ---
 
 ### I am...
-an experienced IT engineer with 13 years experience across a wide field of jobs and companies. For the last 6 years I have focused mainly on Cloud / DevOps on topics.<br><br>
+a seasoned IT engineer with 13 years experience across a wide field of jobs and companies. For the last 6 years I have focused mainly on Cloud / DevOps on topics.<br><br>
 DevOps can mean different things to different people. I view it as the literal interface between development and operations, i.e. what needs to happen for code in development to go live on production and everything afterwards to run it in a secure and stable way. It means building infra and tooling that attempts to remove the "wall" between development and operations, allowing for quick & easy deployments and troubleshooting.
 
 
