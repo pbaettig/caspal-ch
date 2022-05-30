@@ -88,8 +88,8 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     target_origin_id       = local.s3_origin_id
     viewer_protocol_policy = "allow-all"
     min_ttl                = 0
-    default_ttl            = 300
-    max_ttl                = 3600
+    default_ttl            = 12*3600
+    max_ttl                = 24*3600
     forwarded_values {
       query_string = false
 
