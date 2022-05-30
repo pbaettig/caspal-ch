@@ -6,6 +6,7 @@ alembic-jekyll-theme-*.gem
 Gemfile.lock
 **/Gemfile.lock
 jekyll/content/vendor/
+jekyll/google_creds
 terraform/.terraform/
 terraform/lambda/__pycache__/
 terraform/lambda/*.zip
