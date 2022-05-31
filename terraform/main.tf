@@ -9,6 +9,12 @@ terraform {
       source = "hashicorp/null"
     }
   }
+  backend "s3" {
+    bucket = "caspal-terraform-state"
+    key    = "caspal-ch-website/"
+    region = "us-east-1"
+    dynamodb_table = "caspal-terraform-locks"
+  }
 }
 
 provider "aws" {
