@@ -11,11 +11,13 @@ from googleapiclient.http import MediaIoBaseDownload
 from hashlib import md5
 
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
 
 
-def oauth_authorize(token_fname='google_creds/token.json', creds_fname='google_creds/credentials.json'):
+def oauth_authorize(token_fname, creds_fname):
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
@@ -66,17 +68,22 @@ def compare_file_checksums(fname_1, fname_2) -> bool:
 
 
 def main():
-    cv_fname = 'content/_site/assets/CV-en.pdf'
+    creds_dir = os.path.join(SCRIPT_DIR, 'google_creds')
+    creds_fname = os.path.join(creds_dir, 'credentials.json')
+    token_fname = os.path.join(creds_dir, 'token.json')
+
+    cv_file_id = '1at8R58RRQqrUVp_H7zpe41H9T9bHUwXMACaeCyYtBNM'
+    cv_fname = os.path.join(SCRIPT_DIR, 'content/_site/assets/CV-en.pdf')
     cv_tmp = mktemp()
-    file_id = '1at8R58RRQqrUVp_H7zpe41H9T9bHUwXMACaeCyYtBNM'
-    creds = oauth_authorize()
+
+    creds = oauth_authorize(token_fname, creds_fname)
     service = build('drive', 'v3', credentials=creds)
 
-    download_doc_pdf(service, file_id, cv_tmp)
+    download_doc_pdf(service, cv_file_id, cv_tmp)
 
     if not compare_file_checksums(cv_tmp, cv_fname):
-        print(f'updated {cv_fname}!')
         os.rename(cv_tmp, cv_fname)
+        print(f'updated {cv_fname}!')
     else:
         os.remove(cv_tmp)
 
